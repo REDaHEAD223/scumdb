@@ -1,0 +1,102 @@
+{
+  "title": "ScumDB - База данных SCUM",
+  "filesUploaded": "Файлов загружено",
+  "tabs": {
+    "players": "Игроки",
+    "squads": "Отряды",
+    "flags": "Флаги",
+    "vehicles": "Транспорт"
+  },
+  "stats": {
+    "players": "Игроки",
+    "squads": "Отряды",
+    "flags": "Флаги",
+    "vehicles": "Транспорт"
+  },
+  "dataInput": {
+    "title": "Загрузить данные SCUM сервера",
+    "instruction": "Скопируйте дампы admin командами в SCUM и вставьте в поля ниже (Ctrl+V)",
+    "players": "Игроки (ListPlayers)",
+    "squads": "Отряды (DumpAllSquadsInfoList)",
+    "flags": "Флаги (ListFlags)",
+    "vehicles": "Транспорт (ListSpawnedVehicles)",
+    "processData": "ОБРАБОТАТЬ ДАННЫЕ",
+    "loading": "Обработка...",
+    "filesLoaded": "Файлов загружено",
+    "pastePlayers": "Вставьте данные игроков сюда...",
+    "pasteSquads": "Вставьте данные отрядов сюда...",
+    "pasteFlags": "Вставьте данные флагов сюда...",
+    "pasteVehicles": "Вставьте данные транспорта сюда..."
+  },
+  "playersView": {
+    "title": "Игроки",
+    "search": "Поиск...",
+    "columns": {
+      "number": "№",
+      "name": "Имя",
+      "steamId": "Steam ID",
+      "fame": "Слава",
+      "money": "Деньги",
+      "gold": "Золото",
+      "squad": "Отряд",
+      "flags": "Флаги",
+      "vehicles": "Транспорт"
+    },
+    "details": {
+      "basicInfo": "Основная информация",
+      "fame": "Слава",
+      "money": "Деньги",
+      "gold": "Золото",
+      "squad": "Отряд",
+      "flags": "Флаги",
+      "vehicles": "Транспорт",
+      "location": "Местоположение",
+      "close": "Закрыть",
+      "memberCount": "Количество участников"
+    },
+    "status": {
+      "online": "Онлайн",
+      "offline": "Оффлайн"
+    }
+  },
+  "squadsView": {
+    "title": "Отряды",
+    "search": "Поиск по названию отряда или имени участника",
+    "columns": {
+      "name": "Название",
+      "leader": "Лидер",
+      "members": "Участники"
+    },
+    "details": {
+      "basicInfo": "Основная информация",
+      "leaderInfo": "Лидер",
+      "memberCount": "Количество участников",
+      "membersList": "Список участников",
+      "memberRank": "Ранг",
+      "close": "Закрыть"
+    }
+  },
+  "flagsView": {
+    "title": "Флаги",
+    "search": "Поиск по ID, владельцу или местоположению",
+    "columns": {
+      "id": "ID",
+      "owner": "Владелец",
+      "count": "Количество",
+      "flags": "Флаги",
+      "location": "Местоположение",
+      "squad": "Отряд"
+    }
+  },
+  "vehiclesView": {
+    "title": "Транспорт",
+    "search": "Поиск по типу, ID или владельцу",
+    "noOwner": "Без владельца",
+    "columns": {
+      "id": "ID",
+      "type": "Тип",
+      "location": "Местоположение",
+      "owner": "Владелец"
+    }
+  }
+} 
