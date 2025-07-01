@@ -23,8 +23,8 @@ i18n
       caches: ['localStorage']
     }
   }).then(() => {
-    console.log('%cNEXT SCUM', 'color: #00e676; font-size: 24px; font-weight: bold;');
-    console.log('%cС любовью к SCUM комьюнити ❤️', 'color: #ff5722; font-size: 16px;');
+    console.log('%cNEXT SCUM', 'color: #00e676; font-size: 48px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);');
+    console.log('%cС любовью к SCUM комьюнити ❤️', 'color: #ff5722; font-size: 20px; font-weight: bold;');
   });
 
 export default i18n; 

@@ -219,10 +219,9 @@ const DataInput = ({ onDataProcessed }) => {
     return vehicles;
   };
 
-  const handleProcess = () => {
+  const handleProcess = async () => {
     setIsProcessing(true);
-    setIsProcessed(false);
-
+    
     try {
       const processedData = {
         players: parsePlayersData(playersData),
@@ -230,8 +229,10 @@ const DataInput = ({ onDataProcessed }) => {
         flags: parseFlagsData(flagsData),
         vehicles: parseVehiclesData(vehiclesData)
       };
+      
       onDataProcessed(processedData);
       setIsProcessed(true);
+      setExpanded(false); // Сворачиваем блок после успешной обработки
     } catch (error) {
       console.error('Error processing data:', error);
     } finally {

@@ -65,7 +65,6 @@ function App() {
   };
 
   const handleDataProcessed = (processedData) => {
-    console.log('Processed data:', processedData);
     setData(processedData);
   };
 
