@@ -11,7 +11,7 @@ i18n
     fallbackLng: 'ru',
     supportedLngs: ['ru', 'en'],
     load: 'languageOnly',
-    debug: true,
+    debug: false,
     interpolation: {
       escapeValue: false,
     },
@@ -19,9 +19,12 @@ i18n
       loadPath: '/scumdb/locales/{{lng}}/translation.json',
     },
     detection: {
-      order: ['querystring', 'cookie', 'localStorage', 'navigator'],
-      caches: ['localStorage', 'cookie'],
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage']
     }
+  }).then(() => {
+    console.log('%cSCUM DB', 'color: #00e676; font-size: 24px; font-weight: bold;');
+    console.log('%cС любовью к SCUM комьюнити ❤️', 'color: #ff5722; font-size: 16px;');
   });
 
 export default i18n; 
