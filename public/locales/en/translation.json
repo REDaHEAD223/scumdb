@@ -1,0 +1,89 @@
+{
+  "title": "ScumDB - SCUM Database",
+  "filesUploaded": "Data successfully uploaded",
+  "tabs": {
+    "players": "Players",
+    "squads": "Squads",
+    "flags": "Flags",
+    "vehicles": "Vehicles"
+  },
+  "stats": {
+    "players": "Players",
+    "squads": "Squads",
+    "flags": "Flags",
+    "vehicles": "Vehicles"
+  },
+  "dataInput": {
+    "title": "Upload SCUM Server Data",
+    "instruction": "Copy admin command dumps from SCUM and paste them below (Ctrl+V)",
+    "players": "Players (ListPlayers)",
+    "squads": "Squads (DumpAllSquadsInfoList)",
+    "flags": "Flags (ListFlags)",
+    "vehicles": "Vehicles (ListSpawnedVehicles)",
+    "processData": "PROCESS DATA",
+    "loading": "Processing...",
+    "filesLoaded": "Files loaded",
+    "pastePlayers": "Paste players data here...",
+    "pasteSquads": "Paste squads data here...",
+    "pasteFlags": "Paste flags data here...",
+    "pasteVehicles": "Paste vehicles data here..."
+  },
+  "playersView": {
+    "title": "Players",
+    "search": "Search by name, Steam ID or location",
+    "columns": {
+      "number": "#",
+      "steamId": "Steam ID",
+      "name": "Name",
+      "fame": "Fame",
+      "money": "Money",
+      "gold": "Gold",
+      "squad": "Squad",
+      "flags": "Flags",
+      "vehicles": "Vehicles",
+      "location": "Location"
+    }
+  },
+  "squadsView": {
+    "title": "Squads",
+    "search": "Search by squad name or member name",
+    "leader": "Leader",
+    "columns": {
+      "name": "Name",
+      "leader": "Leader",
+      "members": "Members"
+    },
+    "details": {
+      "title": "Squad Information",
+      "basicInfo": "Basic Information",
+      "leaderInfo": "Leader Information",
+      "memberCount": "Member Count",
+      "membersList": "Members List",
+      "memberRank": "Rank",
+      "close": "Close"
+    }
+  },
+  "flagsView": {
+    "title": "Flags",
+    "search": "Search by ID, owner or location",
+    "columns": {
+      "id": "ID",
+      "owner": "Owner",
+      "count": "Count",
+      "flags": "Flags",
+      "location": "Location",
+      "squad": "Squad"
+    }
+  },
+  "vehiclesView": {
+    "title": "Vehicles",
+    "search": "Search by type, ID or owner",
+    "noOwner": "No owner",
+    "columns": {
+      "id": "ID",
+      "type": "Type",
+      "location": "Location",
+      "owner": "Owner"
+    }
+  }
+} 
