@@ -9,6 +9,8 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'ru',
+    supportedLngs: ['ru', 'en'],
+    load: 'languageOnly',
     debug: true,
     interpolation: {
       escapeValue: false,
@@ -16,6 +18,10 @@ i18n
     backend: {
       loadPath: '/scumdb/locales/{{lng}}/translation.json',
     },
+    detection: {
+      order: ['querystring', 'cookie', 'localStorage', 'navigator'],
+      caches: ['localStorage', 'cookie'],
+    }
   });
 
 export default i18n; 
