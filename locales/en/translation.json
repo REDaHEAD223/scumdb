@@ -1,6 +1,6 @@
 {
-  "title": "ScumDB - SCUM Database",
-  "filesUploaded": "Data successfully uploaded",
+  "title": "ScumDB - SCUM Viewer by NEXT SCUM",
+  "filesUploaded": "Successfully processed",
   "tabs": {
     "players": "Players",
     "squads": "Squads",
@@ -13,6 +13,14 @@
     "flags": "Flags",
     "vehicles": "Vehicles"
   },
+  "common": {
+    "copyCoordinates": "Copy coordinates",
+    "copyNumbers": "Copy numbers only",
+    "coordinatesCopied": "Coordinates copied",
+    "numbersCopied": "Numbers copied",
+    "teleport": "Copy teleport command",
+    "close": "Close"
+  },
   "dataInput": {
     "title": "Upload SCUM Server Data",
     "instruction": "Copy admin command dumps from SCUM and paste them below (Ctrl+V)",
@@ -22,7 +30,7 @@
     "vehicles": "Vehicles (ListSpawnedVehicles)",
     "processData": "PROCESS DATA",
     "loading": "Processing...",
-    "filesLoaded": "Files loaded",
+    "filesLoaded": "Successfully processed",
     "pastePlayers": "Paste players data here...",
     "pasteSquads": "Paste squads data here...",
     "pasteFlags": "Paste flags data here...",
@@ -30,18 +38,35 @@
   },
   "playersView": {
     "title": "Players",
-    "search": "Search by name, Steam ID or location",
+    "search": "Search by name or Steam ID",
     "columns": {
       "number": "#",
-      "steamId": "Steam ID",
       "name": "Name",
+      "steamId": "Steam ID",
       "fame": "Fame",
       "money": "Money",
       "gold": "Gold",
       "squad": "Squad",
       "flags": "Flags",
+      "vehicles": "Vehicles"
+    },
+    "details": {
+      "basicInfo": "Basic Information",
+      "fame": "Fame",
+      "money": "Money",
+      "gold": "Gold",
+      "squad": "Squad",
+      "flags": "Flags",
+      "squadFlags": "Squad Flags",
+      "leaderFlags": "Leader Flags",
       "vehicles": "Vehicles",
-      "location": "Location"
+      "location": "Location",
+      "close": "Close",
+      "memberCount": "Member count"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline"
     }
   },
   "squadsView": {
