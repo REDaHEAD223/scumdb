@@ -1,6 +1,6 @@
 {
-  "title": "ScumDB - База данных SCUM",
-  "filesUploaded": "Файлов загружено",
+  "title": "ScumDB - SCUM Viewer by NEXT SCUM",
+  "filesUploaded": "Успешно обработано",
   "tabs": {
     "players": "Игроки",
     "squads": "Отряды",
@@ -13,6 +13,14 @@
     "flags": "Флаги",
     "vehicles": "Транспорт"
   },
+  "common": {
+    "copyCoordinates": "Скопировать координаты",
+    "copyNumbers": "Скопировать только числа",
+    "coordinatesCopied": "Координаты скопированы",
+    "numbersCopied": "Числа скопированы",
+    "teleport": "Скопировать команду телепорта",
+    "close": "Закрыть"
+  },
   "dataInput": {
     "title": "Загрузить данные SCUM сервера",
     "instruction": "Скопируйте дампы admin командами в SCUM и вставьте в поля ниже (Ctrl+V)",
@@ -22,7 +30,7 @@
     "vehicles": "Транспорт (ListSpawnedVehicles)",
     "processData": "ОБРАБОТАТЬ ДАННЫЕ",
     "loading": "Обработка...",
-    "filesLoaded": "Файлов загружено",
+    "filesLoaded": "Успешно обработано",
     "pastePlayers": "Вставьте данные игроков сюда...",
     "pasteSquads": "Вставьте данные отрядов сюда...",
     "pasteFlags": "Вставьте данные флагов сюда...",
@@ -30,7 +38,7 @@
   },
   "playersView": {
     "title": "Игроки",
-    "search": "Поиск...",
+    "search": "Поиск по имени или Steam ID",
     "columns": {
       "number": "№",
       "name": "Имя",
@@ -49,6 +57,8 @@
       "gold": "Золото",
       "squad": "Отряд",
       "flags": "Флаги",
+      "squadFlags": "Флаги отряда",
+      "leaderFlags": "Флаги лидера отряда",
       "vehicles": "Транспорт",
       "location": "Местоположение",
       "close": "Закрыть",

@@ -115,7 +115,7 @@ function App() {
           </Box>
 
           <Box sx={{ mt: 2 }}>
-            {currentTab === 0 && <PlayersView players={data.players} squads={data.squads} />}
+            {currentTab === 0 && <PlayersView players={data.players} squads={data.squads} flags={data.flags} vehicles={data.vehicles} />}
             {currentTab === 1 && <SquadsView squads={data.squads} />}
             {currentTab === 2 && <FlagsView flags={data.flags} players={data.players} squads={data.squads} />}
             {currentTab === 3 && <VehiclesView vehicles={data.vehicles} players={data.players} />}
