@@ -14,27 +14,26 @@
     "vehicles": "Vehicles"
   },
   "common": {
+    "process": "PROCESS DATA",
+    "processing": "Processing...",
     "copyCoordinates": "Copy coordinates",
-    "copyNumbers": "Copy numbers only",
+    "copyNumbers": "Copy numbers",
     "coordinatesCopied": "Coordinates copied",
     "numbersCopied": "Numbers copied",
     "teleport": "Copy teleport command",
-    "close": "Close"
+    "close": "Close",
+    "clearData": "CLEAR DATA"
   },
   "dataInput": {
     "title": "Upload SCUM Server Data",
-    "instruction": "Copy admin command dumps from SCUM and paste them below (Ctrl+V)",
-    "players": "Players (ListPlayers)",
-    "squads": "Squads (DumpAllSquadsInfoList)",
-    "flags": "Flags (ListFlags)",
-    "vehicles": "Vehicles (ListSpawnedVehicles)",
-    "processData": "PROCESS DATA",
-    "loading": "Processing...",
-    "filesLoaded": "Successfully processed",
-    "pastePlayers": "Paste players data here...",
-    "pasteSquads": "Paste squads data here...",
-    "pasteFlags": "Paste flags data here...",
-    "pasteVehicles": "Paste vehicles data here..."
+    "instruction": "Copy dumps using admin commands in SCUM and paste them into fields below (Ctrl+V)",
+    "sections": {
+      "players": "Players (ListPlayers)",
+      "squads": "Squads (DumpAllSquadsInfoList)",
+      "flags": "Flags (ListFlags)",
+      "vehicles": "Vehicles (ListSpawnedVehicles)"
+    },
+    "success": "Successfully processed"
   },
   "playersView": {
     "title": "Players",
@@ -104,6 +103,7 @@
     "title": "Vehicles",
     "search": "Search by type, ID or owner",
     "noOwner": "No owner",
+    "unknownPlayer": "Unknown player",
     "columns": {
       "id": "ID",
       "type": "Type",
