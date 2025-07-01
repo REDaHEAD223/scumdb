@@ -7,6 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/scumdb/',  // Название вашего репозитория
   plugins: [react()],
   build: {
     outDir: 'dist',
