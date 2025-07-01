@@ -14,20 +14,25 @@
     "vehicles": "Транспорт"
   },
   "common": {
-    "copyCoordinates": "Скопировать координаты",
-    "copyNumbers": "Скопировать только числа",
+    "process": "ОБРАБОТАТЬ ДАННЫЕ",
+    "processing": "Обработка...",
+    "copyCoordinates": "Копировать координаты",
+    "copyNumbers": "Копировать числа",
     "coordinatesCopied": "Координаты скопированы",
     "numbersCopied": "Числа скопированы",
     "teleport": "Скопировать команду телепорта",
     "close": "Закрыть"
   },
   "dataInput": {
-    "title": "Загрузить данные SCUM сервера",
+    "title": "Загрузка данных сервера SCUM",
     "instruction": "Скопируйте дампы admin командами в SCUM и вставьте в поля ниже (Ctrl+V)",
-    "players": "Игроки (ListPlayers)",
-    "squads": "Отряды (DumpAllSquadsInfoList)",
-    "flags": "Флаги (ListFlags)",
-    "vehicles": "Транспорт (ListSpawnedVehicles)",
+    "sections": {
+      "players": "Игроки (ListPlayers)",
+      "squads": "Отряды (DumpAllSquadsInfoList)",
+      "flags": "Флаги (ListFlags)",
+      "vehicles": "Транспорт (ListSpawnedVehicles)"
+    },
+    "success": "Успешно обработано",
     "processData": "ОБРАБОТАТЬ ДАННЫЕ",
     "loading": "Обработка...",
     "filesLoaded": "Успешно обработано",
@@ -102,6 +107,7 @@
     "title": "Транспорт",
     "search": "Поиск по типу, ID или владельцу",
     "noOwner": "Без владельца",
+    "unknownPlayer": "Неизвестный игрок",
     "columns": {
       "id": "ID",
       "type": "Тип",

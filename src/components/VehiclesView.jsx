@@ -47,24 +47,14 @@ const VehiclesView = ({ vehicles, players }) => {
     return new Map(players.map(player => [player.steamId, player]));
   }, [players]);
 
-  const formatLocation = (location) => {
-    return `X=${Math.round(location.x)} Y=${Math.round(location.y)} Z=${Math.round(location.z)}`;
-  };
-
-  const formatLocationForCopy = (location) => {
-    return `X=${Math.round(location.x)} Y=${Math.round(location.y)} Z=${Math.round(location.z)}`;
-  };
-
-  const formatLocationNumbers = (location) => {
-    return `${Math.round(location.x)} ${Math.round(location.y)} ${Math.round(location.z)}`;
-  };
-
   const handleCopyLocation = (location, format) => {
-    const text = format === 'full' ? formatLocationForCopy(location) : formatLocationNumbers(location);
+    if (!location) return;
+    
+    const text = format === 'full' ? location : location.match(/X=(-?\d+\.?\d*)\s+Y=(-?\d+\.?\d*)\s+Z=(-?\d+\.?\d*)/)?.slice(1).join(' ') || '';
     navigator.clipboard.writeText(text).then(() => {
       setSnackbar({
         open: true,
-        message: format === 'full' ? 'Координаты скопированы' : 'Числа скопированы'
+        message: format === 'full' ? t('common.coordinatesCopied') : t('common.numbersCopied')
       });
     });
   };
@@ -79,18 +69,18 @@ const VehiclesView = ({ vehicles, players }) => {
     };
 
     vehicles.forEach(vehicle => {
-      const owner = vehicle.ownerSteamId ? playerMap.get(vehicle.ownerSteamId) : null;
-      
-      if (!owner) {
+      if (!vehicle.ownerSteamId) {
         noOwnerGroup.vehicles.push(vehicle);
         return;
       }
 
-      const key = owner.steamId;
+      const owner = playerMap.get(vehicle.ownerSteamId);
+      const key = vehicle.ownerSteamId;
+      
       if (!groups[key]) {
         groups[key] = {
-          ownerName: owner.name,
-          ownerSteamId: owner.steamId,
+          ownerName: owner ? owner.name : `${t('vehiclesView.unknownPlayer')} (${vehicle.ownerSteamId})`,
+          ownerSteamId: vehicle.ownerSteamId,
           vehicles: []
         };
       }
@@ -189,9 +179,9 @@ const VehiclesView = ({ vehicles, players }) => {
                         <TableCell>
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <LocationIcon color="action" fontSize="small" />
-                            <Typography>{formatLocation(vehicle.location)}</Typography>
+                            <Typography>{vehicle.location}</Typography>
                             <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
-                              <Tooltip title="Копировать координаты (с подписями)">
+                              <Tooltip title={t('common.copyCoordinates')}>
                                 <IconButton 
                                   size="small" 
                                   onClick={() => handleCopyLocation(vehicle.location, 'full')}
@@ -199,7 +189,7 @@ const VehiclesView = ({ vehicles, players }) => {
                                   <ContentCopyIcon fontSize="small" />
                                 </IconButton>
                               </Tooltip>
-                              <Tooltip title="Копировать координаты (только числа)">
+                              <Tooltip title={t('common.copyNumbers')}>
                                 <IconButton 
                                   size="small"
                                   onClick={() => handleCopyLocation(vehicle.location, 'numbers')}

@@ -1,36 +1,17 @@
 import React, { useState } from 'react';
+import { Box, Typography, TextField, Button, Collapse, IconButton } from '@mui/material';
+import { ExpandMore, KeyboardArrowUp } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Paper,
-  Alert,
-  Collapse,
-  IconButton,
-  CircularProgress
-} from '@mui/material';
-import {
-  KeyboardArrowDown as ExpandMoreIcon,
-  KeyboardArrowUp as ExpandLessIcon,
-  CloudUpload as CloudUploadIcon,
-  Check as CheckIcon
-} from '@mui/icons-material';
 
 const DataInput = ({ onDataProcessed }) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [playersData, setPlayersData] = useState('');
   const [squadsData, setSquadsData] = useState('');
   const [flagsData, setFlagsData] = useState('');
   const [vehiclesData, setVehiclesData] = useState('');
-
-  const handleExpand = () => {
-    setExpanded(!expanded);
-  };
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isProcessed, setIsProcessed] = useState(false);
 
   const parsePlayersData = (data) => {
     if (!data) return [];
@@ -46,15 +27,17 @@ const DataInput = ({ onDataProcessed }) => {
       // Ищем номер и имя игрока
       const playerNumberMatch = line.match(/^\d+\.\s+(.+)$/);
       if (playerNumberMatch) {
+        if (currentPlayer) {
+          players.push(currentPlayer);
+        }
         currentPlayer = {
           name: playerNumberMatch[1].trim(),
           steamId: '',
           fame: 0,
           money: 0,
           gold: 0,
-          location: null
+          location: ''
         };
-        players.push(currentPlayer);
         continue;
       }
 
@@ -89,15 +72,14 @@ const DataInput = ({ onDataProcessed }) => {
       }
 
       // Ищем Location
-      const locationMatch = line.match(/^Location:\s+X=(-?\d+\.?\d*)\s+Y=(-?\d+\.?\d*)\s+Z=(-?\d+\.?\d*)/);
+      const locationMatch = line.match(/^Location:\s+(.+)$/);
       if (locationMatch) {
-        currentPlayer.location = {
-          x: parseFloat(locationMatch[1]),
-          y: parseFloat(locationMatch[2]),
-          z: parseFloat(locationMatch[3])
-        };
-        continue;
+        currentPlayer.location = locationMatch[1].trim();
       }
+    }
+
+    if (currentPlayer) {
+      players.push(currentPlayer);
     }
     
     return players;
@@ -144,7 +126,6 @@ const DataInput = ({ onDataProcessed }) => {
         }
 
         currentSquad.members.push(member);
-        continue;
       }
     }
     
@@ -162,18 +143,14 @@ const DataInput = ({ onDataProcessed }) => {
       if (!line || line.startsWith('Page')) continue;
 
       // Ищем информацию о флаге и его владельце
-      const flagMatch = line.match(/^Flag ID:\s+(\d+)\s+\|\s+Owner:\s+\[(\d+)\]\s+(.+?)\s+\((\d+)\)\s+\|\s+Location:\s+X=(-?\d+\.?\d*)\s+Y=(-?\d+\.?\d*)\s+Z=(-?\d+\.?\d*)$/);
+      const flagMatch = line.match(/^Flag ID:\s+(\d+)\s+\|\s+Owner:\s+\[(\d+)\]\s+(.+?)\s+\((\d+)\)\s+\|\s+Location:\s+(.+)$/);
       if (flagMatch) {
         const flag = {
           id: parseInt(flagMatch[1]),
           ownerSteamId: flagMatch[2],
           ownerName: flagMatch[3].trim(),
           ownerId: parseInt(flagMatch[4]),
-          location: {
-            x: parseFloat(flagMatch[5]),
-            y: parseFloat(flagMatch[6]),
-            z: parseFloat(flagMatch[7])
-          }
+          location: flagMatch[5].trim()
         };
         flags.push(flag);
       }
@@ -192,27 +169,22 @@ const DataInput = ({ onDataProcessed }) => {
       line = line.trim();
       if (!line) continue;
 
-      // Ищем информацию о транспорте: #ID: TYPE X=X Y=Y Z=Z OWNER_ID OWNER_INFO
-      const vehicleMatch = line.match(/^#(\d+):\s+(.+?)\s+\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z\s+X=(-?\d+\.?\d*)\s+Y=(-?\d+\.?\d*)\s+Z=(-?\d+\.?\d*)\s+(\d*)\s+(.*)$/);
+      // Ищем информацию о транспорте: #ID: TYPE DATETIME X=X Y=Y Z=Z OWNER_ID OWNER_INFO
+      const vehicleMatch = line.match(/^#(\d+):\s+(.+?)\s+\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z\s+(.+?)\s+(\d+)\s+(.*?)$/);
       if (vehicleMatch) {
         const vehicle = {
-          id: parseInt(vehicleMatch[1]),
+          id: vehicleMatch[1],
           type: vehicleMatch[2].trim(),
-          location: {
-            x: parseFloat(vehicleMatch[3]),
-            y: parseFloat(vehicleMatch[4]),
-            z: parseFloat(vehicleMatch[5])
-          },
+          location: vehicleMatch[3].trim(),
           ownerSteamId: null
         };
 
         // Проверяем владельца
-        const ownerInfo = vehicleMatch[7].trim();
-        if (ownerInfo && ownerInfo !== 'No owner') {
-          const ownerMatch = ownerInfo.match(/^(\d+)$/);
-          if (ownerMatch) {
-            vehicle.ownerSteamId = ownerMatch[1];
-          }
+        const ownerInfo = vehicleMatch[5].trim();
+        
+        // Если в ownerInfo есть Steam ID, используем его
+        if (ownerInfo.includes('7656')) {
+          vehicle.ownerSteamId = ownerInfo;
         }
 
         vehicles.push(vehicle);
@@ -222,96 +194,108 @@ const DataInput = ({ onDataProcessed }) => {
     return vehicles;
   };
 
-  const processData = () => {
-    setLoading(true);
-    
-    // Обработка данных
-    const processedData = {
-      players: parsePlayersData(playersData),
-      squads: parseSquadsData(squadsData),
-      flags: parseFlagsData(flagsData),
-      vehicles: parseVehiclesData(vehiclesData)
-    };
-    
-    setTimeout(() => {
+  const handleProcess = () => {
+    setIsProcessing(true);
+    setIsProcessed(false);
+
+    try {
+      const processedData = {
+        players: parsePlayersData(playersData),
+        squads: parseSquadsData(squadsData),
+        flags: parseFlagsData(flagsData),
+        vehicles: parseVehiclesData(vehiclesData)
+      };
       onDataProcessed(processedData);
-      setSuccess(true);
-      setLoading(false);
+      setIsProcessed(true);
       setExpanded(false);
-    }, 1000);
+    } catch (error) {
+      console.error('Error processing data:', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
-    <Paper sx={{ p: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: expanded ? 2 : 0 }}>
-        <Typography variant="h6" component="div">
+    <Box sx={{ mb: 2, bgcolor: 'background.paper', borderRadius: 1, overflow: 'hidden' }}>
+      <Box
+        sx={{
+          p: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          cursor: 'pointer',
+          '&:hover': { bgcolor: 'action.hover' },
+        }}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <Typography variant="h6" component="h2">
           {t('dataInput.title')}
         </Typography>
-        <IconButton onClick={handleExpand}>
-          {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </IconButton>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          {isProcessed && !expanded && (
+            <Typography color="success.main">
+              {t('dataInput.success')}
+            </Typography>
+          )}
+          <IconButton size="small">
+            {expanded ? <KeyboardArrowUp /> : <ExpandMore />}
+          </IconButton>
+        </Box>
       </Box>
 
       <Collapse in={expanded}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Скопируйте дампы admin командами в SCUM и вставьте в поля ниже (Ctrl+V)
-        </Typography>
+        <Box sx={{ p: 2 }}>
+          <Typography sx={{ mb: 2 }} color="text.secondary">
+            {t('dataInput.instruction')}
+          </Typography>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <TextField
-            label="Игроки (ListPlayers)"
-            multiline
-            rows={4}
-            value={playersData}
-            onChange={(e) => setPlayersData(e.target.value)}
-            fullWidth
-          />
-          <TextField
-            label="Отряды (DumpAllSquadsInfoList)"
-            multiline
-            rows={4}
-            value={squadsData}
-            onChange={(e) => setSquadsData(e.target.value)}
-            fullWidth
-          />
-          <TextField
-            label="Флаги (ListFlags)"
-            multiline
-            rows={4}
-            value={flagsData}
-            onChange={(e) => setFlagsData(e.target.value)}
-            fullWidth
-          />
-          <TextField
-            label="Транспорт (ListSpawnedVehicles)"
-            multiline
-            rows={4}
-            value={vehiclesData}
-            onChange={(e) => setVehiclesData(e.target.value)}
-            fullWidth
-          />
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              label={t('dataInput.sections.players')}
+              multiline
+              rows={4}
+              value={playersData}
+              onChange={(e) => setPlayersData(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label={t('dataInput.sections.squads')}
+              multiline
+              rows={4}
+              value={squadsData}
+              onChange={(e) => setSquadsData(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label={t('dataInput.sections.flags')}
+              multiline
+              rows={4}
+              value={flagsData}
+              onChange={(e) => setFlagsData(e.target.value)}
+              fullWidth
+            />
+            <TextField
+              label={t('dataInput.sections.vehicles')}
+              multiline
+              rows={4}
+              value={vehiclesData}
+              onChange={(e) => setVehiclesData(e.target.value)}
+              fullWidth
+            />
+          </Box>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Box sx={{ mt: 2, display: 'flex', gap: 2, alignItems: 'center' }}>
             <Button
               variant="contained"
-              color="primary"
-              size="large"
-              onClick={processData}
-              disabled={loading}
-              startIcon={loading ? <CircularProgress size={20} /> : success ? <CheckIcon /> : <CloudUploadIcon />}
+              onClick={handleProcess}
+              disabled={isProcessing}
             >
-              {loading ? t('dataInput.loading') : success ? t('dataInput.filesLoaded') : t('dataInput.processData')}
+              {isProcessing ? t('common.processing') : t('common.process')}
             </Button>
           </Box>
         </Box>
       </Collapse>
-
-      {success && !expanded && (
-        <Alert severity="success" sx={{ mt: 2 }}>
-          {t('dataInput.filesLoaded')}
-        </Alert>
-      )}
-    </Paper>
+    </Box>
   );
 };
 

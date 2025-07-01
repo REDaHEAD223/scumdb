@@ -88,20 +88,10 @@ const PlayersView = ({ players, squads, flags, vehicles }) => {
     );
   };
 
-  const formatLocation = (location) => {
-    return `X=${Math.round(location.x)} Y=${Math.round(location.y)} Z=${Math.round(location.z)}`;
-  };
-
-  const formatLocationForCopy = (location) => {
-    return `X=${Math.round(location.x)} Y=${Math.round(location.y)} Z=${Math.round(location.z)}`;
-  };
-
-  const formatLocationNumbers = (location) => {
-    return `${Math.round(location.x)} ${Math.round(location.y)} ${Math.round(location.z)}`;
-  };
-
   const handleCopyLocation = (location, format) => {
-    const text = format === 'full' ? formatLocationForCopy(location) : formatLocationNumbers(location);
+    if (!location) return;
+    
+    const text = format === 'full' ? location : location.match(/X=(-?\d+\.?\d*)\s+Y=(-?\d+\.?\d*)\s+Z=(-?\d+\.?\d*)/)?.slice(1).join(' ') || '';
     navigator.clipboard.writeText(text).then(() => {
       setSnackbar({
         open: true,
@@ -321,7 +311,7 @@ const PlayersView = ({ players, squads, flags, vehicles }) => {
                 }}>
                   <LocationIcon color="action" />
                   <Typography sx={{ flexGrow: 1 }}>
-                    {formatLocation(selectedPlayer.location)}
+                    {selectedPlayer.location}
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 0.5 }}>
                     <Tooltip title={t('common.copyCoordinates')}>
@@ -483,7 +473,7 @@ const PlayersView = ({ players, squads, flags, vehicles }) => {
                                 <Typography component="div" variant="body2" color="textSecondary">
                                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                     <LocationIcon color="action" fontSize="small" />
-                                    <Typography>{formatLocation(flag.location)}</Typography>
+                                    <Typography>{flag.location}</Typography>
                                     <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
                                       <Tooltip title={t('common.copyCoordinates')}>
                                         <IconButton 
@@ -568,7 +558,7 @@ const PlayersView = ({ players, squads, flags, vehicles }) => {
                               <Typography component="div" variant="body2" color="textSecondary">
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                   <LocationIcon color="action" fontSize="small" />
-                                  <Typography>{formatLocation(vehicle.location)}</Typography>
+                                  <Typography>{vehicle.location}</Typography>
                                   <Box sx={{ ml: 'auto', display: 'flex', gap: 0.5 }}>
                                     <Tooltip title={t('common.copyCoordinates')}>
                                       <IconButton 
