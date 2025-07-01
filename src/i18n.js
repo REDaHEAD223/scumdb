@@ -23,7 +23,7 @@ i18n
       caches: ['localStorage']
     }
   }).then(() => {
-    console.log('%cSCUM DB', 'color: #00e676; font-size: 24px; font-weight: bold;');
+    console.log('%cNEXT SCUM', 'color: #00e676; font-size: 24px; font-weight: bold;');
     console.log('%cС любовью к SCUM комьюнити ❤️', 'color: #ff5722; font-size: 16px;');
   });
 
