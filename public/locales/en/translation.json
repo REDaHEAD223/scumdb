@@ -21,7 +21,8 @@
     "coordinatesCopied": "Coordinates copied",
     "numbersCopied": "Numbers copied",
     "teleport": "Copy teleport command",
-    "close": "Close"
+    "close": "Close",
+    "clearData": "CLEAR DATA"
   },
   "dataInput": {
     "title": "Upload SCUM Server Data",

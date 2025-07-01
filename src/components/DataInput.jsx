@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, TextField, Button, Collapse, IconButton } from '@mui/material';
 import { ExpandMore, KeyboardArrowUp } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -6,12 +6,37 @@ import { useTranslation } from 'react-i18next';
 const DataInput = ({ onDataProcessed }) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(true);
-  const [playersData, setPlayersData] = useState('');
-  const [squadsData, setSquadsData] = useState('');
-  const [flagsData, setFlagsData] = useState('');
-  const [vehiclesData, setVehiclesData] = useState('');
+  const [playersData, setPlayersData] = useState(() => {
+    return localStorage.getItem('scumdb_players_data') || '';
+  });
+  const [squadsData, setSquadsData] = useState(() => {
+    return localStorage.getItem('scumdb_squads_data') || '';
+  });
+  const [flagsData, setFlagsData] = useState(() => {
+    return localStorage.getItem('scumdb_flags_data') || '';
+  });
+  const [vehiclesData, setVehiclesData] = useState(() => {
+    return localStorage.getItem('scumdb_vehicles_data') || '';
+  });
   const [isProcessing, setIsProcessing] = useState(false);
   const [isProcessed, setIsProcessed] = useState(false);
+
+  // Сохраняем данные при изменении
+  useEffect(() => {
+    localStorage.setItem('scumdb_players_data', playersData);
+  }, [playersData]);
+
+  useEffect(() => {
+    localStorage.setItem('scumdb_squads_data', squadsData);
+  }, [squadsData]);
+
+  useEffect(() => {
+    localStorage.setItem('scumdb_flags_data', flagsData);
+  }, [flagsData]);
+
+  useEffect(() => {
+    localStorage.setItem('scumdb_vehicles_data', vehiclesData);
+  }, [vehiclesData]);
 
   const parsePlayersData = (data) => {
     if (!data) return [];
@@ -207,12 +232,26 @@ const DataInput = ({ onDataProcessed }) => {
       };
       onDataProcessed(processedData);
       setIsProcessed(true);
-      setExpanded(false);
     } catch (error) {
       console.error('Error processing data:', error);
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const clearStoredData = () => {
+    // Очищаем данные из localStorage
+    localStorage.removeItem('scumdb_players_data');
+    localStorage.removeItem('scumdb_squads_data');
+    localStorage.removeItem('scumdb_flags_data');
+    localStorage.removeItem('scumdb_vehicles_data');
+
+    // Очищаем состояния
+    setPlayersData('');
+    setSquadsData('');
+    setFlagsData('');
+    setVehiclesData('');
+    setIsProcessed(false);
   };
 
   return (
@@ -286,11 +325,19 @@ const DataInput = ({ onDataProcessed }) => {
 
           <Box sx={{ mt: 2, display: 'flex', gap: 2, alignItems: 'center' }}>
             <Button
+              variant="outlined"
+              color="error"
+              onClick={clearStoredData}
+              disabled={isProcessing}
+            >
+              {t('common.clearData')}
+            </Button>
+            <Button
               variant="contained"
               onClick={handleProcess}
               disabled={isProcessing}
             >
-              {isProcessing ? t('common.processing') : t('common.process')}
+              {t('common.process')}
             </Button>
           </Box>
         </Box>
